@@ -2,8 +2,8 @@
 
 This gem makes it easy to run an autostager script, in the event that the puppet environment needs 'PULL' only and cannot use git-hooks
 
-. **TODO: auth for private repos**
-. **TODO: thor binary/runner**
+* **TODO: auth for private repos**
+* **TODO: thor binary/runner**
 
 ## Installation
 

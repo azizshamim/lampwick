@@ -34,7 +34,7 @@ module Autostage
         %x|git fetch --quiet origin '+refs/pull/*/head:refs/remotes/origin/pr/*'|
         refs = %x|git show-ref --dereference|
         flipped_refs = refs.split("\n").map{|ab| ab.split(/\s+/).reverse }.flatten
-        refs = Hash[*flipped_refs].select { |key,v| key =~ /origin\/pr\/\d+$/ }
+        refs = Hash[*flipped_refs].delete_if { |ref,hash| ref !~ /origin\/pr\/\d+$/ }
       end
       refs
     end

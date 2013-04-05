@@ -73,7 +73,7 @@ module Autostage
     def purge!
       raise StandardError, "Unsafe purge halted" if @config.target.empty?
       Dir.chdir @config.target do
-        FileUtils.rm_rf(".", secure: true)
+        FileUtils.rm_rf(".", :secure => true)
       end
     end
 

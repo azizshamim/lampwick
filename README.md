@@ -2,7 +2,7 @@
 
 This gem makes it easy to run an autostager script, in the event that the puppet environment needs 'PULL' only and cannot use git-hooks
 
-[![Build Status](https://travis-ci.org/[YOUR_GITHUB_USERNAME]/[YOUR_PROJECT_NAME].png)](https://travis-ci.org/azizshamim/puppet-autostager)
+[![Build Status](https://travis-ci.org/azizshamim/puppet-autostager.png?branch=master)](https://travis-ci.org/azizshamim/puppet-autostager)
 
 * **TODO: auth for private repos**
 * **TODO: thor binary/runner**

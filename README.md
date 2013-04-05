@@ -2,6 +2,8 @@
 
 This gem makes it easy to run an autostager script, in the event that the puppet environment needs 'PULL' only and cannot use git-hooks
 
+[![Build Status](https://travis-ci.org/[YOUR_GITHUB_USERNAME]/[YOUR_PROJECT_NAME].png)](https://travis-ci.org/azizshamim/puppet-autostager)
+
 * **TODO: auth for private repos**
 * **TODO: thor binary/runner**
 
@@ -25,8 +27,8 @@ Create a configuration file with the following elements
 ```
 ---
   git:      'git repository' (e.g. https://github.com/fup/example.git or git@github.com:fup/example
-  target:   'path to the directory where the environments will be cloned'
-  temp_dir: 'path to the directory where the repository will be initially cloned, useful for reducing the amount of data fetched each time' [Optional]
+  target:   'path to the directory where the environments will be set up'
+  temp_dir: 'path to the directory where the repository will be initially cloned' [Optional]
 ```
 If using basic auth, include it in the URI (e.g. https://**user**:**password**@github.com/fup/somerepo.git)
 

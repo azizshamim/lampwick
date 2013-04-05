@@ -3,8 +3,8 @@ require File.join(File.dirname(__FILE__), 'spec_helper.rb')
 describe Autostage::Git, :constraint => 'slow' do
   let(:git) { 'https://github.com/jfryman/puppet-nginx.git' }
   let(:cleanup!) do
-    FileUtils.rm_rf("#{@target}/.", secure: true)
-    FileUtils.rm_rf("#{@repo}/.", secure: true)
+    FileUtils.rm_rf("#{@target}/.", :secure => true)
+    FileUtils.rm_rf("#{@repo}/.", :secure => true)
   end
 
   before(:all) do

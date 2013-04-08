@@ -8,14 +8,19 @@ describe Autostage::Git, :constraint => 'slow' do
   end
 
   before(:all) do
-    @target = File.join(File.dirname(__FILE__),'..','tmp','target')
-    @repo = File.join(File.dirname(__FILE__),'..','tmp','repo')
+    @tmpdir = Dir.mktmpdir
+    @target = File.join(@tmpdir,'target')
+    @repo = File.join(@tmpdir,'repo')
     %x|mkdir -p #{@target}|
     %x|mkdir -p #{@repo}|
   end
 
   after(:each) do
     cleanup!
+  end
+
+  after(:all) do
+    FileUtils.rm_rf("#{@tmpdir}/.", :secure => true)
   end
 
   it 'should require git argument' do
@@ -32,6 +37,7 @@ describe Autostage::Git, :constraint => 'slow' do
 
   it 'should create a hash_environment for every branch in the target directory' do
     as = Autostage::Git.new(:git => git, :repo => @repo)
+    as.update_or_clone
     as.populate_environments(@target)
     hash_environments = Dir["#{@target}/*"]
     hash_environments.should_not be_empty
@@ -39,11 +45,13 @@ describe Autostage::Git, :constraint => 'slow' do
 
   it 'should return a list of pull requests' do
     as = Autostage::Git.new(:git => git, :repo => @repo)
+    as.update_or_clone
     as.pull_requests.should be_a(Hash)
   end
 
   it 'should created named directories' do
     as = Autostage::Git.new(:git => git, :repo => @repo)
+    as.update_or_clone
     as.populate_environments(@target)
     pre_naming = Dir["#{@target}/*"]
     as.named_directories(@target)

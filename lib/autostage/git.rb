@@ -3,10 +3,9 @@ require 'tmpdir'
 require 'uri'
 require 'github_api'
 
-#TODO: Minigit output needs to be hidden behind verbose logging
-
 module Autostage
   class Git
+    attr_reader :config
     REQUIRED_INITIAL = [ :git ]
     # pass a git repository, access credentials to the git repo (username/password or path to an ssh key)
     # { :git => '', :user => 'foo', :password => 'bar', :key => 'path/to/key' }
@@ -20,15 +19,14 @@ module Autostage
       @config.git = URI(@config.git)
     end
 
-    def update_or_clone
-      @config.repo ||= Dir.mktmpdir
+    def update_or_clone(repo = @config.repo)
       if @config.git.scheme == 'https'
-        %x|git clone --quiet #{@config.git} #{@config.repo}| unless File.exist? "#{@config.repo}/.git/config"
+        %x|git clone --quiet #{@config.git} #{repo}| unless repo_exists?(repo)
       end
     end
 
-    def pull_requests
-      update_or_clone
+    def pull_requests(repo = @config.repo)
+      raise StandardError, "Repo has not been cloned at: #{repo}" unless repo_exists?(repo)
       refs = Hash.new
       Dir.chdir @config.repo do
         %x|git fetch --quiet origin '+refs/pull/*/head:refs/remotes/origin/pr/*'|
@@ -39,8 +37,8 @@ module Autostage
       refs
     end
 
-    def populate_environments(target)
-      @config.target = target
+    def populate_environments(target = @config.target)
+      raise StandardError, "Repo has not been cloned at: #{repo}" unless repo_exists?(@config.repo)
       Dir.chdir target do
         pull_requests.each do |ref, hash|
           %x|git clone #{@config.repo} #{target}/#{hash}|
@@ -51,17 +49,7 @@ module Autostage
       end
     end
 
-    def github_requests
-      github = Github.new
-      reqs = Hash.new
-      github.pull_requests.list(:repo => repo, :user => user) do |req|
-        reqs[req['head']['sha']] = "#{req['user']['login']}_#{req['head']['ref']}"
-      end
-      reqs
-    end
-
-    def named_directories(target)
-      pr = pull_requests
+    def named_directories(target = @config.target)
       Dir.chdir target do
         github_requests.each do |hash,name|
           File.symlink(hash, name)
@@ -70,6 +58,10 @@ module Autostage
     end
 
     private
+    def repo_exists?(repo = @config.repo)
+      File.exist? "#{repo}/.git/config"
+    end
+
     def purge!
       raise StandardError, "Unsafe purge halted" if @config.target.empty?
       Dir.chdir @config.target do
@@ -79,6 +71,15 @@ module Autostage
 
     def repo
       @config.git.path.split('/').last.chomp('.git')
+    end
+
+    def github_requests
+      github = Github.new
+      reqs = Hash.new
+      github.pull_requests.list(:repo => repo, :user => user) do |req|
+        reqs[req['head']['sha']] = "#{req['user']['login']}_#{req['head']['ref']}"
+      end
+      reqs
     end
 
     def user

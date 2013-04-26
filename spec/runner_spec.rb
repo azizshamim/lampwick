@@ -12,14 +12,14 @@ describe Autostage::Runner, :focus => true do
     %x|mkdir -p #{@target}|
     %x|mkdir -p #{@repo}|
 
-    content =<<-EOF
-    ---
-      git: 'https://github.com/jfryman/puppet-nginx.git'
-      user: 'fup'
-      password: 'notArealP@ssword'
-      target: '#{@target}'
-      repo: '#{@repo}'
-    EOF
+    content =<<EOF
+---
+  git: 'https://github.com/jfryman/puppet-nginx.git'
+  user: 'fup'
+  password: 'notArealP@ssword'
+  target: '#{@target}'
+  repo: '#{@repo}'
+EOF
 
     @autostage_conf = File.join(@tmpdir,'autostage.conf')
     File.open(@autostage_conf, 'w') {|f| f.write(content) }
@@ -39,14 +39,20 @@ describe Autostage::Runner, :focus => true do
 
   it 'should store config' do
     subject.config.should be_empty
+    subject.config = @autostage_conf
+    subject.config.should_not be_empty
   end
 
   it 'should store purge' do
-    subject.purge.should be_false
+    subject.purge = true
+    subject.purge.should be_true
+    subject.purge = false
   end
 
   it 'should store named' do
-    subject.named.should be_false
+    subject.named = true
+    subject.named.should be_true
+    subject.named = false
   end
 
   it 'should load up a config file' do
@@ -56,7 +62,7 @@ describe Autostage::Runner, :focus => true do
 
   it 'should run!' do
     subject.config = @autostage_conf
-    lambda { subject.run!.should_not raise_execption }
+    #lambda { subject.run!.should_not raise_execption }
     subject.run!
   end
 

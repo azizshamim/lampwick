@@ -6,13 +6,15 @@ module Autostage
 
     def self.run!
       raise ArgumentError, "Need to have a config" if @config.empty?
-      config = YAML.load(File.open(self.config))
+      f = File.open(@config)
+      config = YAML::load(f)
       git = Autostage::Git.new(config)
       if @purge and !git.config.target.nil?
-        puts "Purging #{@config.target}"
-        git.purge(@config.target)
+        puts "Purging #{git.config.target}"
+        Dir.chdir git.config.target do
+          FileUtils.rm_rf(".", :secure => true)
+        end
       end
-      puts "cloning #{git.config.repo} into #{git.config.target}"
       git.update_or_clone
       git.populate_environments
       git.named_directories if @named and git.config.target

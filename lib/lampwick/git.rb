@@ -1,7 +1,8 @@
 require 'ostruct'
 require 'tmpdir'
 require 'uri'
-require 'github_api'
+require 'open-uri'
+require 'json'
 
 module Lampwick
   class Git
@@ -74,10 +75,12 @@ module Lampwick
     end
 
     def github_requests
-      github = Github.new
+      #GET /repos/:owner/:repo/pulls
       reqs = Hash.new
-      github.pull_requests.list(:repo => repo, :user => user) do |req|
-        reqs[req['head']['sha']] = "#{req['user']['login']}_#{req['head']['ref']}"
+      JSON.parse(open("https://api.github.com/repos/#{user}/#{repo}/pulls",
+                      "User-Agent" => "Lampwick Autostager"
+      ).read).each do |pull|
+        reqs[pull['head']['sha']] = "#{pull['user']['login']}_#{pull['head']['ref']}"
       end
       reqs
     end

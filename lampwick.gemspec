@@ -10,7 +10,6 @@ Gem::Specification.new do |gem|
 
   gem.requirements << 'git, >1.7'
 
-  gem.add_dependency('github_api')
   gem.add_development_dependency('rb-fsevent', '~> 0.9')
   gem.add_development_dependency('guard-rspec')
   gem.add_development_dependency('pry')

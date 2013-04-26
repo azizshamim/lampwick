@@ -1,4 +1,4 @@
-describe Lampwick::Runner, :focus => true do
+describe Lampwick::Runner do
   let(:git) { 'https://github.com/jfryman/puppet-nginx.git' }
   let(:cleanup!) do
     FileUtils.rm_rf("#{@target}/.", :secure => true)

@@ -1,6 +1,6 @@
 require File.join(File.dirname(__FILE__), 'spec_helper.rb')
 
-describe Lampwick::Git, :constraint => 'slow' do
+describe Lampwick::Git, :constraint => 'slow', :focus => true do
   let(:git) { 'https://github.com/jfryman/puppet-nginx.git' }
   let(:cleanup!) do
     FileUtils.rm_rf("#{@target}/.", :secure => true)

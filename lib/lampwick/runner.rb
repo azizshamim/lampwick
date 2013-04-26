@@ -7,7 +7,7 @@ module Lampwick
     def self.run!
       raise ArgumentError, "Need to have a config" if @config.empty?
       f = File.open(@config)
-      config = YAML::load(f)
+      config = ::YAML::load(f)
       git = Lampwick::Git.new(config)
       if @purge and !git.config.target.nil?
         puts "Purging #{git.config.target}"

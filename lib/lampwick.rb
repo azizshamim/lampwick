@@ -1,3 +1,5 @@
+require 'YAML'
+require 'json'
 
 module Lampwick; end
 

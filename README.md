@@ -4,8 +4,6 @@ This gem makes it easy to run an autostage script, in the event that the puppet 
 
 [![Build Status](https://travis-ci.org/azizshamim/lampwick.png?branch=master)](https://travis-ci.org/azizshamim/lampwick)
 
-* **TODO: auth for private repos**
-
 ## Installation
 
 Add this line to your application's Gemfile:

@@ -3,13 +3,13 @@ require 'tmpdir'
 require 'uri'
 require 'github_api'
 
-module Autostage
+module Lampwick
   class Git
     attr_reader :config
     REQUIRED_INITIAL = [ :git ]
     # pass a git repository, access credentials to the git repo (username/password or path to an ssh key)
     # { :git => '', :user => 'foo', :password => 'bar', :key => 'path/to/key' }
-    # returns a new autostage object
+    # returns a new lampwick object
     def initialize(config)
       @config = ::OpenStruct.new(config)
       REQUIRED_INITIAL.each do |arg|

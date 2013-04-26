@@ -1,6 +1,6 @@
 require File.join(File.dirname(__FILE__), 'spec_helper.rb')
 
-describe Autostage::Git, :constraint => 'slow' do
+describe Lampwick::Git, :constraint => 'slow' do
   let(:git) { 'https://github.com/jfryman/puppet-nginx.git' }
   let(:cleanup!) do
     FileUtils.rm_rf("#{@target}/.", :secure => true)
@@ -24,19 +24,19 @@ describe Autostage::Git, :constraint => 'slow' do
   end
 
   it 'should require git argument' do
-    lambda { Autostage::Git.new }.should raise_exception
-    lambda { Autostage::Git.new(:git => '') }.should raise_exception
-    lambda { Autostage::Git.new(:git => git) }.should_not raise_exception
+    lambda { Lampwick::Git.new }.should raise_exception
+    lambda { Lampwick::Git.new(:git => '') }.should raise_exception
+    lambda { Lampwick::Git.new(:git => git) }.should_not raise_exception
   end
 
   it 'should clone a respoitory in the target directory' do
-    as = Autostage::Git.new(:git => git, :repo => @repo)
+    as = Lampwick::Git.new(:git => git, :repo => @repo)
     as.update_or_clone
     Dir["#{@repo}/*"].should_not be_empty
   end
 
   it 'should create a hash_environment for every branch in the target directory' do
-    as = Autostage::Git.new(:git => git, :repo => @repo)
+    as = Lampwick::Git.new(:git => git, :repo => @repo)
     as.update_or_clone
     as.populate_environments(@target)
     hash_environments = Dir["#{@target}/*"]
@@ -44,13 +44,13 @@ describe Autostage::Git, :constraint => 'slow' do
   end
 
   it 'should return a list of pull requests' do
-    as = Autostage::Git.new(:git => git, :repo => @repo)
+    as = Lampwick::Git.new(:git => git, :repo => @repo)
     as.update_or_clone
     as.pull_requests.should be_a(Hash)
   end
 
   it 'should created named directories' do
-    as = Autostage::Git.new(:git => git, :repo => @repo)
+    as = Lampwick::Git.new(:git => git, :repo => @repo)
     as.update_or_clone
     as.populate_environments(@target)
     pre_naming = Dir["#{@target}/*"]

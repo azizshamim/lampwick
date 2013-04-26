@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__),'..','lib','autostage.rb')
+require File.join(File.dirname(__FILE__),'..','lib','lampwick.rb')
 
 RSpec.configure do |config|
   # RSpec automatically cleans stuff out of backtraces;

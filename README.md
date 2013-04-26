@@ -1,8 +1,8 @@
-# Autostage
+# Lampwick
 
 This gem makes it easy to run an autostage script, in the event that the puppet environment needs 'PULL' only and cannot use git-hooks
 
-[![Build Status](https://travis-ci.org/azizshamim/puppet-autostage.png?branch=master)](https://travis-ci.org/azizshamim/puppet-autostage)
+[![Build Status](https://travis-ci.org/azizshamim/lampwick.png?branch=master)](https://travis-ci.org/azizshamim/lampwick)
 
 * **TODO: auth for private repos**
 
@@ -11,7 +11,7 @@ This gem makes it easy to run an autostage script, in the event that the puppet 
 Add this line to your application's Gemfile:
 
 ```
-gem 'puppet-autostage'
+gem 'lampwick'
 ```
 
 And then execute:
@@ -23,7 +23,7 @@ $ bundle
 Or install it yourself as:
 
 ```
-$ gem install puppet-autostage
+$ gem install lampwick
 ```
 
 ## Usage
@@ -42,7 +42,7 @@ If using ssh, make sure the key is loaded using keyagent, key location is curren
 For GitHub private repos, username and password are needed.
 
 ```shell
-autostage --config <config_file> [--named] [--purge]
+lampwick --config <config_file> [--named] [--purge]
 ```
 ## Contributing
 

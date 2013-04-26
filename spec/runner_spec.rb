@@ -1,4 +1,4 @@
-describe Autostage::Runner, :focus => true do
+describe Lampwick::Runner, :focus => true do
   let(:git) { 'https://github.com/jfryman/puppet-nginx.git' }
   let(:cleanup!) do
     FileUtils.rm_rf("#{@target}/.", :secure => true)
@@ -32,7 +32,7 @@ EOF
   end
 
 
-  subject { Autostage::Runner }
+  subject { Lampwick::Runner }
   it { should respond_to(:run!) }
 
   it 'should store config' do

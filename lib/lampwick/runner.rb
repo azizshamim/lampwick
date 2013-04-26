@@ -1,4 +1,4 @@
-module Autostage
+module Lampwick
   class Runner
     class << self; attr_accessor :config, :purge, :named; end
     @config = ''
@@ -8,7 +8,7 @@ module Autostage
       raise ArgumentError, "Need to have a config" if @config.empty?
       f = File.open(@config)
       config = YAML::load(f)
-      git = Autostage::Git.new(config)
+      git = Lampwick::Git.new(config)
       if @purge and !git.config.target.nil?
         puts "Purging #{git.config.target}"
         Dir.chdir git.config.target do

@@ -15,8 +15,6 @@ describe Autostage::Runner, :focus => true do
     content =<<EOF
 ---
   git: 'https://github.com/jfryman/puppet-nginx.git'
-  user: 'fup'
-  password: 'notArealP@ssword'
   target: '#{@target}'
   repo: '#{@repo}'
 EOF

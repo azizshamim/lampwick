@@ -5,21 +5,26 @@ This gem makes it easy to run an autostage script, in the event that the puppet 
 [![Build Status](https://travis-ci.org/azizshamim/puppet-autostage.png?branch=master)](https://travis-ci.org/azizshamim/puppet-autostage)
 
 * **TODO: auth for private repos**
-* **TODO: thor binary/runner**
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'puppet-autostage'
+```
+gem 'puppet-autostage'
+```
 
 And then execute:
 
-    $ bundle
+```
+$ bundle
+```
 
 Or install it yourself as:
 
-    $ gem install puppet-autostage
+```
+$ gem install puppet-autostage
+```
 
 ## Usage
 
@@ -28,16 +33,16 @@ Create a configuration file with the following elements
 ---
   git:      'git repository' (e.g. https://github.com/fup/example.git or git@github.com:fup/example
   target:   'path to the directory where the environments will be set up'
-  temp_dir: 'path to the directory where the repository will be initially cloned' [Optional]
+  repo:     'path to the directory where the repository will be initially cloned' [Optional]
 ```
 If using basic auth, include it in the URI (e.g. https://**user**:**password**@github.com/fup/somerepo.git)
 
-If using ssh, include a path to your key (**Unsupported for now**)
+If using ssh, make sure the key is loaded using keyagent, key location is currently unsupported.
 
-For private repos, username and password are needed.
+For GitHub private repos, username and password are needed.
 
 ```shell
-autostage --config <config_file>
+autostage --config <config_file> [--named] [--purge]
 ```
 ## Contributing
 
